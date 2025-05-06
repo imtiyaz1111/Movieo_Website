@@ -41,7 +41,8 @@ const Register = () => {
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.message || "Registration failed. Please try again."
+        error?.response?.data?.message ||
+          "Registration failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -49,15 +50,28 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-indigo-200 mt-5">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center filter blur-sm scale-110"
+        style={{
+          backgroundImage: `url('http://wallpapercave.com/wp/wp1945909.jpg')`,
+          zIndex: -2,
+        }}
+      ></div>
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black opacity-60 z-[-1]"></div>
+
+      {/* Form */}
       <form
-        className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-lg space-y-6"
+        className="bg-black bg-opacity-90 p-10 rounded-2xl shadow-xl w-full max-w-lg space-y-6 z-10 mt-10"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-3xl font-bold text-center text-indigo-700">
+        <h2 className="text-3xl font-bold text-center text-white">
           Create Your Account
         </h2>
-        <p className="text-center text-gray-500 mb-4">
+        <p className="text-center text-gray-300 mb-4">
           Please fill in the details below
         </p>
 
@@ -68,7 +82,7 @@ const Register = () => {
             placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           <input
@@ -77,7 +91,7 @@ const Register = () => {
             placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           <input
@@ -86,8 +100,7 @@ const Register = () => {
             placeholder="Create Password"
             value={formData.password}
             onChange={handleChange}
-       
-            className="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           <input
@@ -96,8 +109,7 @@ const Register = () => {
             placeholder="Phone Number"
             value={formData.phone}
             onChange={handleChange}
-       
-            className="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           <input
@@ -106,8 +118,7 @@ const Register = () => {
             placeholder="Security Answer (e.g. pet name)"
             value={formData.answer}
             onChange={handleChange}
-        
-            className="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
 
@@ -123,9 +134,9 @@ const Register = () => {
           {loading ? "Registering..." : "Register"}
         </button>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
+        <p className="text-center text-sm text-gray-400 mt-4">
           Already have an account?{" "}
-          <Link to="/login" className="text-indigo-600 hover:underline">
+          <Link to="/login" className="text-indigo-400 hover:underline">
             Login here
           </Link>
         </p>

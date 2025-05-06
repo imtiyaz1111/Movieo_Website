@@ -102,12 +102,20 @@ const Header = () => {
               <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-md py-2 z-50">
                 {auth?.user ? (
                   <>
+                   <Link to="/update-password">
+                   <button
+                      className="w-full text-left px-4 py-2 text-black hover:bg-gray-100"
+                    >
+                      UpdatePassword
+                    </button>
+                   </Link>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-black hover:bg-gray-100"
                     >
                       Logout
                     </button>
+                    
                   </>
                 ) : (
                   <>

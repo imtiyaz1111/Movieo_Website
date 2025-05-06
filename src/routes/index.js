@@ -6,6 +6,8 @@ import DetailsPage from "../pages/DetailsPage";
 import SearchPage from "../pages/SearchPage";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
+import UpdatePassword from "../pages/auth/UpdatePassword";
+import ForgotPassword from "../pages/auth/ForgotPassword";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
             {
                 path : "login",
                 element : <Login/>
+            },
+            {
+                path : "update-password",
+                element : <UpdatePassword/>
+            },
+            {
+                path : "forgot-password",
+                element : <ForgotPassword/>
             }
         ]
     }

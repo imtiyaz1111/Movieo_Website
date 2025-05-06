@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { setAuth } from "../../redux/Slice/authSlice";
 
-const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+const ForgotPassword = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    answer: "",
+    newPassword: "",
+  });
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,23 +22,24 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "https://tureappapiforreact.onrender.com/api/login",
-        formData
+        const newForm={
+            email:formData.email,
+            answer:formData.answer,
+            newPassword:formData.newPassword
+        }
+      const res = await axios.post(
+        "https://tureappapiforreact.onrender.com/api/forget-password",
+        newForm
       );
 
-      if (data.success === true) {
-        dispatch(setAuth({ user: data.user, token: data.token }));
-        toast.success(data.message);
-        navigate("/");
-      } else {
-        toast.error(data.message);
+      if (res && res.data.success===true) {
+        setLoading(false)
+        toast.success(res.data.message);
+        navigate("/login");
       }
     } catch (error) {
-      toast.error(
-        error?.response?.data?.message ||
-        "Login failed. Please check your credentials."
-      );
+        console.log(error);
+        toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -57,16 +59,16 @@ const Login = () => {
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black opacity-60 z-[-1]"></div>
 
-      {/* Login Form */}
+      {/* Forgot Password Form */}
       <form
         className="bg-black bg-opacity-90 p-10 rounded-2xl shadow-xl w-full max-w-md space-y-6 z-10"
         onSubmit={handleSubmit}
       >
         <h2 className="text-3xl font-bold text-center text-white">
-          Login to Your Account
+          Reset Password
         </h2>
         <p className="text-center text-gray-300 mb-4">
-          Enter your email and password
+          Enter your email, answer, and new password
         </p>
 
         <div className="space-y-4">
@@ -79,23 +81,21 @@ const Login = () => {
             className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
           <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
+            type="text"
+            name="answer"
+            placeholder="Answer"
+            value={formData.answer}
             onChange={handleChange}
             className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
-
-          {/* Forgot Password Link */}
-          <div className="text-right">
-            <Link
-              to="/forgot-password"
-              className="text-sm text-indigo-400 hover:underline"
-            >
-              Forgot Password?
-            </Link>
-          </div>
+          <input
+            type="password"
+            name="newPassword"
+            placeholder="New Password"
+            value={formData.newPassword}
+            onChange={handleChange}
+            className="w-full px-5 py-3 border border-gray-600 bg-black text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
         </div>
 
         <button
@@ -107,13 +107,13 @@ const Login = () => {
               : "bg-indigo-600 hover:bg-indigo-700 text-white"
           }`}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Resetting..." : "Reset Password"}
         </button>
 
         <p className="text-center text-sm text-gray-400 mt-4">
-          Don’t have an account?{" "}
-          <Link to="/register" className="text-indigo-400 hover:underline">
-            Register here
+          Remembered your password?{" "}
+          <Link to="/login" className="text-indigo-400 hover:underline">
+            Login here
           </Link>
         </p>
       </form>
@@ -121,4 +121,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
